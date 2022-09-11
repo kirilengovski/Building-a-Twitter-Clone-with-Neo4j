@@ -1,0 +1,9 @@
+<ul>
+{% for k, v in related_users.items() %}
+    {% if k == 'followers' %}
+        {% for i in v %}
+            <li>{{i}}</li>
+        {% endfor %}
+    {% endif %}
+{% endfor %}
+</ul>

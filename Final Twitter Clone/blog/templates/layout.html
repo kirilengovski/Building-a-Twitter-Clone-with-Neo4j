@@ -1,0 +1,32 @@
+<!doctype html>
+<title>Twitter Clone By Kiril Engovski</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+<div class="page">
+  <h1>Twitter Clone By Kiril Engovski</h1>
+  <div class="metanav">
+  {% if session.username %}
+  <form style="float: left;" action="{{ url_for('search') }}" method="post">
+  <dd><input type="text" size="20" name="search"></dd>
+  <input type="submit" value="Search">
+  </form>
+
+  <form style="float: left;" action="{{ url_for('advanced_search') }}" method="post">
+  <dd><input type="text" size="20" name="advanced_search"></dd>
+  <input type="submit" value="Advanced Search">
+  </form><br>
+  Logged in as {{ session.username }}
+  {% endif %}
+  <a href="{{ url_for('index') }}">Home</a>
+  {% if not session.username %}
+    <a href="{{ url_for('register') }}">Register</a>
+    <a href="{{ url_for('login') }}">Login</a>
+  {% else %}
+    <a href="{{ url_for('profile', username=session.username) }}">Profile</a>
+    <a href="{{ url_for('logout') }}">Logout</a>
+  {% endif %}
+  </div>
+  {% for message in get_flashed_messages() %}
+    <div class="flash">{{ message }}</div>
+  {% endfor %}
+  {% block body %}{% endblock %}
+</div>
