@@ -1,9 +1,0 @@
-<ul>
-{% for k, v in related_users.items() %}
-    {% if k == 'blocks' %}
-        {% for i in v %}
-            <li>{{i}} <a href="{{ url_for('unblock', username=i) }}">unblock</a></li>
-        {% endfor %}
-    {% endif %}
-{% endfor %}
-</ul>
