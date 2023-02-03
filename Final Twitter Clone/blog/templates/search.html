@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>{{ Search }}</h2>
+
+    <h3>Search results for: {{search}}</h3><br>
+
+    {% include "display_search.html" %}
+    <!-- If you are blocked or you blocked that user -->
+
+{% endblock %}

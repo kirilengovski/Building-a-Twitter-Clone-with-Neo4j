@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<h2>{{ username }}'s profile</h2>
+
+{% if session.username %}
+    {% if session.username == username %}
+        <h3>Users similar to you:</h3>
+
+          {% for user in similar %}
+            <p>
+            <a href="{{ url_for('profile', username=user.similar_user) }}">{{ user.similar_user }}</a>
+            also tweets about <i>{{ ", ".join(user.tags) }}</i>
+            </p>
+          {% else %}
+            <p>There aren't any users who've blogged about the same tags as you!</p>
+          {% endfor %}
+
+        <h3>Recommended users:</h3>
+        {% for user in recommended_users %}
+            <p>
+            <a href="{{ url_for('profile', username=user.user2) }}">{{ user.user2 }}</a>
+                also tweets about <i>{{ ", ".join(user.i) }}</i>
+            </p>
+          {% endfor %}
+
+
+        <h3>Information about related users:</h3>
+        <p>
+        Blocked users:
+        </p>
+        {% include "blocks.html" %}
+        <p>
+        Following: {{ following }}
+        </p>
+        {% include "following.html" %}
+        <p>
+        Followers: {{ followers }}
+        </p>
+        {% include "followers.html" %}
+        <h3>Your recent posts:</h3>
+        {% include "display_posts.html" %}
+
+    {% else %}
+    {% if not blocks %}
+    <!-- if you are not visiting your own profile -->
+    {% if not follows %}
+    <a href="{{ url_for('follow', username=username) }}">follow</a><br>
+    {% else %}
+    <a href="{{ url_for('unfollow', username=username) }}">unfollow</a><br>
+    {% endif %}
+
+    <a href="{{ url_for('block', username=username) }}">block</a><br>
+
+
+  <p>{{ username }} has liked {{ common.likes }} of your posts and
+      {% if common.tags %}
+      also blogs about <i>{{ ", ".join(common.tags) }}</i>
+      {% else %}
+      hasn't blogged about any of the same tags
+      {% endif %}
+  </p>
+
+  <h3>{{ username }}'s recent posts:</h3>
+
+    {% include "display_posts.html" %}
+    <!-- If you are blocked or you blocked that user -->
+    {% else %}
+    <h3>User not found.</h3>
+    {% endif %}
+
+    {% endif %}
+{% endif %}
+
+
+{% endblock %}

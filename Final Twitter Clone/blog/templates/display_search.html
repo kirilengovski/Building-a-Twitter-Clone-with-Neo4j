@@ -1,0 +1,21 @@
+<ul class="posts">
+{% if users %}
+  {% for row in users %}
+      <hr>
+    <li>
+        {% if not blocks %}
+        <b>{{row}}</b>
+        {% endif %}
+        <!-- if you are not visiting your own profile -->
+        {% if not follows %}
+        <a href="{{ url_for('follow', username=row) }}">follow</a>
+        {% else %}
+        <a href="{{ url_for('unfollow', username=row) }}">unfollow</a>
+        {% endif %}
+        <a href="{{ url_for('block', username=row) }}">block</a><br>
+        {% endfor %}
+    </li><hr>
+        {% else %}
+      <li>There aren't any posts yet!</li>
+        {% endif %}
+  </ul>
